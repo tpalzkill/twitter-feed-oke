@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: twitter-feed-v1
+  name: twitter-feed-v2
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
@@ -25,18 +25,18 @@ spec:
           containerPort: 8080
           protocol: TCP
         volumeMounts:
-            - name: podinfo
-              mountPath: /tmp
-              readOnly: false
+          - name: podinfo
+            mountPath: /tmp
+            readOnly: false
       volumes:
         - name: podinfo
           downwardAPI:
             items:
             - path: "labels"
               fieldRef:
-                fieldPath: metadata.labels          
-        imagePullSecrets:
-          - name: wercker
+                fieldPath: metadata.labels
+      imagePullSecrets:
+        - name: wercker
 ---
 apiVersion: v1
 kind: Service
